@@ -1,4 +1,6 @@
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config({ quiet: true });
 
 export const generateToken = (userId, res) => {
   const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
@@ -6,7 +8,9 @@ export const generateToken = (userId, res) => {
   });
   res.cookie("jwt", token, {
     maxAge: 7 * 24 * 60 * 60 * 1000,
-    httpOnly: true,
-    sameSite: "stict",
+    httpOnly: true, //prevent XSS attacks
+    sameSite: "strict", //prevent CSRF attacks
+    secure: process.env.NODE_ENV !== "development",
   });
+  return token;
 };
