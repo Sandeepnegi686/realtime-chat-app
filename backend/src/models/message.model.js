@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 
 const schema = Schema(
   {
@@ -12,5 +12,5 @@ const schema = Schema(
   },
   { timestamps: true },
 );
-const MessageModel = mongoose.model("Message", schema);
+const MessageModel = model("Message", schema);
 export default MessageModel;

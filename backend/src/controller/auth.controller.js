@@ -101,7 +101,7 @@ export const logout = (req, res) => {
 export const updateProfile = async (req, res) => {
   try {
     const { profilePic } = req.body;
-    const userId = req.user._d;
+    const userId = req.user._id;
     if (!profilePic) {
       return res
         .status(400)
@@ -111,7 +111,7 @@ export const updateProfile = async (req, res) => {
     const updatedUser = await UserModel.findByIdAndUpdate(
       userId,
       { profilePic: uploadResponse.secure_url },
-      { new: true },
+      { returnDocument: "after" },
     );
     return res
       .status(200)
